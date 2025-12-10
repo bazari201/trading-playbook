@@ -971,6 +971,13 @@
         }
 
     </style>
+
+    
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
+
 </head>
 <body>
         <!-- Authentication Screen -->
@@ -1057,7 +1064,7 @@
                         <div class="user-avatar" id="userAvatar">U</div>
                         <div class="user-info">
                             <div class="user-name" id="userName">User</div>
-                            <div class="user-email" id="userEmail">user@email.com</div>
+                            <div class="user-email" id="userEmail"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="afdadccaddefcac2cec6c381ccc0c2">[email&#160;protected]</a></div>
                         </div>
                     </div>
                 </div>
@@ -1440,15 +1447,30 @@
     </div>
 
     <!-- Google API -->
-    <script src="https://accounts.google.com/gsi/client" async defer></script>
+    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script src="https://accounts.google.com/gsi/client" async defer></script>
     <script src="https://apis.google.com/js/api.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
     
     <script>
         // ===== GOOGLE SHEETS API CONFIGURATION =====
         // TODO: Replace these with your actual values from Google Cloud Console
-        const CLIENT_ID = 'YOUR_CLIENT_ID_HERE.apps.googleusercontent.com';
-        const API_KEY = 'YOUR_API_KEY_HERE';
+                // ===== FIREBASE CONFIGURATION =====
+        const firebaseConfig = {
+            apiKey: "AIzaSyAg63nq4m6XTNd1CWrdeUKva50Bl_FLIS8",
+            authDomain: "trading-playbook-pro.firebaseapp.com",
+            projectId: "trading-playbook-pro",
+            storageBucket: "trading-playbook-pro.firebasestorage.app",
+            messagingSenderId: "201197617062",
+            appId: "1:201197617062:web:ab3dbbeaf08ffb1e809967"
+        };
+
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+        console.log("✅ Firebase initialized");
+
+        
+        const CLIENT_ID = '882695139495-nhsbdo81onntkvla5h0ukq16fatnf392.apps.googleusercontent.com';
+        const API_KEY = 'AIzaSyBs0O66sO0d8Xy2GeWjYfgnveutSYu8p08';
         const DISCOVERY_DOC = 'https://sheets.googleapis.com/$discovery/rest?version=v4';
         const SCOPES = 'https://www.googleapis.com/auth/spreadsheets';
 
@@ -2800,11 +2822,4 @@
             }
         }
 
-        // Override saveData to save to Firestore instead of localStorage
-        const originalSaveData = saveData;
-        saveData = function() {
-            originalSaveData(); // Still save locally as backup
-            saveUserDataToFirestore(); // Also save to Firestore
-        };
-
-
+        // Override saveData to save to Firestore instead of local
